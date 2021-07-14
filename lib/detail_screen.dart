@@ -165,7 +165,7 @@ class RRBox extends StatelessWidget {
               ],
               color: kBoxColor,
               borderRadius: BorderRadius.all(Radius.circular(12))),
-          margin: EdgeInsets.only(top: 8, bottom: 8, left: 2, right: 2),
+          margin: EdgeInsets.only(top: 8, bottom: 8, left: 6, right: 6),
           padding: EdgeInsets.all(4),
           child: Column(
             children: [

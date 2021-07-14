@@ -21,24 +21,24 @@ class _LoadingScreenState extends State<LoadingScreen> {
   bool isError = false;
   List<int> dateTimeData = [
     0,
-    1485741600,
-    1485741600,
-    1485741600,
-    1485741600,
-    1485741600
+    14800,
+    1233741600,
+    3485741600,
+    1885741600,
+    1485041600
   ];
   List<dynamic> tempData = [20, 24, 23, 34, 45, 56];
   List<dynamic> conditionData = [
     'Hot',
     'Humid',
     'Halo',
-    'Hot',
-    'Humid',
-    'Halo'
+    'Hue',
+    'Humming',
+    'High'
   ];
-  List<dynamic> humidityData = [20, 24, 23, 34, 45, 56];
-  List<dynamic> windData = [20, 24, 23, 34, 45, 56];
-  List<dynamic> iconData = ['10d', '10d', '10d', '10d', '10d', '10d'];
+  List<dynamic> humidityData = [42, 26, 34, 45, 43, 61];
+  List<dynamic> windData = [2, 12, 2.4, 3.4, 5.1, 5.7];
+  List<dynamic> iconData = ['10d', '2d', '3d', '11d', '10n', '1d'];
   double? latitude;
   double? longitude;
   String info = 'Getting Data...';
@@ -115,99 +115,101 @@ class _LoadingScreenState extends State<LoadingScreen> {
  */
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: errorChecker,
-      child: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [randomlyGenColor, kCloudyColor2, kCloudyColor1])),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ErrorDetectionWidget(isError: isError),
-              Container(
-                margin: EdgeInsets.only(top: 12),
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: Icon(
-                          Icons.location_on,
-                          size: 24,
-                        )),
-                    Expanded(
-                        flex: 4,
-                        child: Beautify(
-                          data: city,
-                        )),
-                    Expanded(
-                        //flex: 1,
-                        child: GestureDetector(
-                      onTap: () {
-                        if (isError == false)
-                          Navigator.pushNamed(context, './tsp');
-                      },
-                      child: Icon(Icons.settings),
-                    ))
-                  ],
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: errorChecker,
+        child: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [randomlyGenColor, kCloudyColor2, kCloudyColor1])),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ErrorDetectionWidget(isError: isError),
+                Container(
+                  margin: EdgeInsets.only(top: 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: Icon(
+                            Icons.location_on,
+                            size: 24,
+                          )),
+                      Expanded(
+                          flex: 4,
+                          child: Beautify(
+                            data: city,
+                          )),
+                      Expanded(
+                          //flex: 1,
+                          child: GestureDetector(
+                        onTap: () {
+                          if (isError == false)
+                            Navigator.pushNamed(context, './tsp');
+                        },
+                        child: Icon(Icons.settings),
+                      ))
+                    ],
+                  ),
                 ),
-              ),
-              Spacer(),
-              Container(
-                margin: EdgeInsets.only(top: 12),
-                child: Image.asset(
-                  'assets/cloudy.png',
-                  fit: BoxFit.scaleDown,
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(top: 12),
+                  child: Image.asset(
+                    'assets/cloudy.png',
+                    fit: BoxFit.scaleDown,
+                  ),
                 ),
-              ),
-              Spacer(),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Biggest(
-                            date: date,
-                            dateTimeData: dateTimeData,
-                            windData: windData,
-                            humidityData: humidityData,
-                            conditionData: conditionData,
-                            tempData: tempData,
-                            iconData: iconData,
-                            isError: isError),
+                Spacer(),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Biggest(
+                              date: date,
+                              dateTimeData: dateTimeData,
+                              windData: windData,
+                              humidityData: humidityData,
+                              conditionData: conditionData,
+                              tempData: tempData,
+                              iconData: iconData,
+                              isError: isError),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 10.0), //(x,y)
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                          color: kBoxColor,
+                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                      margin: EdgeInsets.only(
+                          top: 12, bottom: 8, left: 8, right: 8),
+                      padding: EdgeInsets.all(14),
+                      child: MainContent(
+                        description: description,
+                        temperature: temperature,
+                        windSpeed: windSpeed,
+                        humidity: humidity,
+                        icon: icon,
+                        date: dateTimeData[0].toString(),
                       ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(0.0, 10.0), //(x,y)
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                        color: kBoxColor,
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
-                    margin:
-                        EdgeInsets.only(top: 12, bottom: 8, left: 8, right: 8),
-                    padding: EdgeInsets.all(14),
-                    child: MainContent(
-                      description: description,
-                      temperature: temperature,
-                      windSpeed: windSpeed,
-                      humidity: humidity,
-                      icon: icon,
-                      date: dateTimeData[0].toString(),
-                    ),
-                  )),
-              Spacer(),
-            ],
+                    )),
+                Spacer(),
+              ],
+            ),
           ),
         ),
       ),
@@ -226,7 +228,7 @@ class ErrorDetectionWidget extends StatefulWidget {
 class _ErrorDetectionWidgetState extends State<ErrorDetectionWidget> {
   Timer? _timer;
   int _start = 10;
-  int timeleft = 5;
+  int timeleft = 10;
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
